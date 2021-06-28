@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import AuthProvider from "../contexts/AuthProvider";
+import { ConfigProvider } from 'antd';
+import ptBR from 'antd/lib/locale/pt_BR';
 
 import {
   LoginPage,
@@ -17,6 +19,7 @@ import PrivateRoute from "../helpers/PrivateRoute";
 const Routes: React.FC = () => {
 
   return (
+    <ConfigProvider locale={ptBR}>
     <AuthProvider>
       <Router>
         <Switch>
@@ -41,6 +44,7 @@ const Routes: React.FC = () => {
         </Switch>
       </Router>
     </AuthProvider>
+    </ConfigProvider>
   );
 };
 

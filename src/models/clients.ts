@@ -8,13 +8,9 @@ interface IClient {
     state_registration: string;
 }
 
-export const Update = (client: IClient): void => {
+export const Update = (client: IClient): Promise<any> => {
     const api = Api();
-    api.put(`/clients/${client.id}`, client).then(response => {
-
-    }).catch(err => {
-
-    });
+    return api.put(`/clients/${client.id}`, client);
 }
 
 export default IClient;

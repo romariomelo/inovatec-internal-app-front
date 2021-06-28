@@ -1,8 +1,8 @@
 import React from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Empty } from "antd";
 import { Link } from "react-router-dom";
 import Api from "../../services/api";
-import { EyeFilled } from '@ant-design/icons';
+import { EyeFilled, UserAddOutlined } from '@ant-design/icons';
 import { Breakpoint } from 'antd/lib/_util/responsiveObserve';
 
 const columns = [
@@ -18,23 +18,27 @@ const columns = [
     dataIndex: "id",
     key: "id",
     responsive: ['sm'] as Breakpoint[],
+    sorter: (a, b) => a.id - b.id
   },
   {
     title: "Razão Social",
     dataIndex: "trading_name",
     key: "trading_name",
+    sorter: (a, b) => a.trading_name.localeCompare(b.trading_name),
   },
   {
     title: "CNPJ",
     dataIndex: "ein",
     key: "ein",
     responsive: ['sm'] as Breakpoint[],
+    sorter: (a, b) => a.ein.localeCompare(b.ein),
   },
   {
     title: "Fantasia",
     dataIndex: "company_name",
     key: "company_name",
     responsive: ['sm'] as Breakpoint[],
+    sorter: (a, b) => a.company_name.localeCompare(b.company_name),
   },
 ];
 
@@ -69,7 +73,7 @@ const ClientsPage: React.FC = () => {
     <>
       <h1>Clientes</h1>
 
-      <Button type="primary">Novo Cliente</Button>
+      <Button type="primary"><UserAddOutlined /> Novo Cliente</Button>
 
       <h1>{status}</h1>
       {showError ?
@@ -80,8 +84,9 @@ const ClientsPage: React.FC = () => {
         <Table
           columns={columns}
           dataSource={clients}
-          pagination={{ pageSize: 50 }}
+          pagination={{ defaultPageSize: 50, position: ['topRight'] }}
           rowKey={(el) => el.id}
+          locale={{ emptyText: <Empty description="Sem dados cadastrados." /> }}
         />
       ) : null}
     </>

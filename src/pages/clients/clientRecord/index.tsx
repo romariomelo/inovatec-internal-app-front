@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Row, Col, Input, Form, Button } from "antd";
+import { Row, Col, Input, Form, Button, Modal } from "antd";
 import Api from "../../../services/api";
 import { useParams } from "react-router-dom";
 import { Update } from "../../../models/clients";
@@ -34,13 +34,29 @@ const ClientRecordPage: React.FC = () => {
   }, [setClient, form, params]);
 
   const onFinish = (values: any) => {
-    Update(values);
+    setLoading(true);
+    Update(values)
+      .then(() => {
+        Modal.info({
+          content: "Gravado.",
+        });
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Modal.error({
+          title: "Erro ao gravar",
+          content: err.response.statusText
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <>
       {loading ? (
         <>
-          <h1>Carregando...</h1>
+          <h1>Aguarde...</h1>
           <LoadingOutlined style={{ fontSize: 30 }} />
         </>
       ) : (
