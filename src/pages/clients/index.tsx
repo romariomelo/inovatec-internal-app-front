@@ -84,7 +84,7 @@ const ClientsPage: React.FC = () => {
         <Table
           columns={columns}
           dataSource={clients}
-          pagination={{ defaultPageSize: 50, position: ['topRight'] }}
+          pagination={{ defaultPageSize: 50, position: ['topRight', 'bottomRight'] }}
           rowKey={(el) => el.id}
           locale={{ emptyText: <Empty description="Sem dados cadastrados." /> }}
         />
